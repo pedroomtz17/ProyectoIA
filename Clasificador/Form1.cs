@@ -9,15 +9,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.IO.Ports;
+using System.IO;
+using ExcelDataReader;
 
-namespace Clasificador
+namespace Clasificador 
 {
     public partial class Form1 : Form
     {
         private string CadenaRecibida;
         public Form1()
         {
-
             //Creación de hilo
             Thread t = new Thread(new ThreadStart(SplashStart));
             //Arrancamos el hilo
@@ -33,6 +34,8 @@ namespace Clasificador
             Application.Run(new Splash());
         }
 
+       //////////////////////////////////Comunicación con el dispositivo externo/////////////////////////////////////
+
         //Método para buscar los puertos en el equipo
         private void BuscarPuertos()
         {
@@ -46,7 +49,6 @@ namespace Clasificador
             //Agregar el mensaje en la propiedad del control
             cmbPuertos.Text = "Seleccione Puerto";
         }
-
         //Método que se genera al hacer clic en el botón Actualizar
         private void btnActualizarPuertos_Click(object sender, EventArgs e)
         {
@@ -107,6 +109,41 @@ namespace Clasificador
                 serialPort1.WriteLine(txtEnviar.Text);
             else
                 MessageBox.Show("Necesita conectar al puerto.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        //////////////////////////////////////Método para buscar el archivo de Excel///////////////////////////////////////////////
+
+        DataTableCollection tableCollection;
+        private void btnExplorar_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog() { Filter = "Excel Files|*.xls;*.xlsx;*.xlsm" })
+            {
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    txtFileName.Text = openFileDialog.FileName;
+                    using (var stream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.Read))
+                    {
+                        using (IExcelDataReader reader = ExcelReaderFactory.CreateReader(stream))
+                        {
+                            DataSet result = reader.AsDataSet(new ExcelDataSetConfiguration()
+                            {
+                                ConfigureDataTable = (_) => new ExcelDataTableConfiguration() { UseHeaderRow = true }
+                            });
+                            tableCollection = result.Tables;
+                            cmbHoja.Items.Clear();
+                            foreach (DataTable table in tableCollection)
+                                cmbHoja.Items.Add(table.TableName);
+                        }
+                    }
+                }
+
+            }
+        }
+
+        private void cmbHoja_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DataTable dt = tableCollection[cmbHoja.SelectedItem.ToString()];
+            dgvData.DataSource = dt;
         }
     }
 }

@@ -44,8 +44,15 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.lblData = new System.Windows.Forms.Label();
+            this.dgvData = new System.Windows.Forms.DataGridView();
+            this.txtFileName = new System.Windows.Forms.TextBox();
+            this.btnExplorar = new System.Windows.Forms.Button();
+            this.cmbHoja = new System.Windows.Forms.ComboBox();
+            this.lblHoja = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.SuspendLayout();
             // 
             // cmbPuertos
@@ -135,7 +142,7 @@
             this.groupBox1.Controls.Add(this.btnActualizarPuertos);
             this.groupBox1.Controls.Add(this.btnConectar);
             this.groupBox1.Controls.Add(this.btnDesconectar);
-            this.groupBox1.Location = new System.Drawing.Point(35, 44);
+            this.groupBox1.Location = new System.Drawing.Point(45, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(288, 119);
             this.groupBox1.TabIndex = 9;
@@ -149,7 +156,7 @@
             this.groupBox2.Controls.Add(this.txtEnviar);
             this.groupBox2.Controls.Add(this.txtRecibidos);
             this.groupBox2.Controls.Add(this.btnEnviar);
-            this.groupBox2.Location = new System.Drawing.Point(55, 196);
+            this.groupBox2.Location = new System.Drawing.Point(356, 12);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(283, 123);
             this.groupBox2.TabIndex = 10;
@@ -174,12 +181,77 @@
             this.label2.TabIndex = 8;
             this.label2.Text = "Datos a enviar";
             // 
+            // lblData
+            // 
+            this.lblData.AutoSize = true;
+            this.lblData.Location = new System.Drawing.Point(12, 166);
+            this.lblData.Name = "lblData";
+            this.lblData.Size = new System.Drawing.Size(137, 13);
+            this.lblData.TabIndex = 11;
+            this.lblData.Text = "Patrones de entrenamiento:";
+            // 
+            // dgvData
+            // 
+            this.dgvData.AllowUserToAddRows = false;
+            this.dgvData.AllowUserToDeleteRows = false;
+            this.dgvData.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvData.GridColor = System.Drawing.SystemColors.Desktop;
+            this.dgvData.Location = new System.Drawing.Point(12, 226);
+            this.dgvData.MultiSelect = false;
+            this.dgvData.Name = "dgvData";
+            this.dgvData.ReadOnly = true;
+            this.dgvData.Size = new System.Drawing.Size(364, 251);
+            this.dgvData.TabIndex = 12;
+            // 
+            // txtFileName
+            // 
+            this.txtFileName.Location = new System.Drawing.Point(152, 163);
+            this.txtFileName.Name = "txtFileName";
+            this.txtFileName.Size = new System.Drawing.Size(100, 20);
+            this.txtFileName.TabIndex = 13;
+            // 
+            // btnExplorar
+            // 
+            this.btnExplorar.Location = new System.Drawing.Point(258, 161);
+            this.btnExplorar.Name = "btnExplorar";
+            this.btnExplorar.Size = new System.Drawing.Size(75, 23);
+            this.btnExplorar.TabIndex = 14;
+            this.btnExplorar.Text = "Explorar";
+            this.btnExplorar.UseVisualStyleBackColor = true;
+            this.btnExplorar.Click += new System.EventHandler(this.btnExplorar_Click);
+            // 
+            // cmbHoja
+            // 
+            this.cmbHoja.FormattingEnabled = true;
+            this.cmbHoja.Location = new System.Drawing.Point(152, 189);
+            this.cmbHoja.Name = "cmbHoja";
+            this.cmbHoja.Size = new System.Drawing.Size(109, 21);
+            this.cmbHoja.TabIndex = 15;
+            this.cmbHoja.Text = "Seleccione la hoja";
+            this.cmbHoja.SelectedIndexChanged += new System.EventHandler(this.cmbHoja_SelectedIndexChanged);
+            // 
+            // lblHoja
+            // 
+            this.lblHoja.AutoSize = true;
+            this.lblHoja.Location = new System.Drawing.Point(105, 192);
+            this.lblHoja.Name = "lblHoja";
+            this.lblHoja.Size = new System.Drawing.Size(32, 13);
+            this.lblHoja.TabIndex = 16;
+            this.lblHoja.Text = "Hoja:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(734, 472);
+            this.ClientSize = new System.Drawing.Size(1056, 502);
+            this.Controls.Add(this.lblHoja);
+            this.Controls.Add(this.cmbHoja);
+            this.Controls.Add(this.btnExplorar);
+            this.Controls.Add(this.txtFileName);
+            this.Controls.Add(this.dgvData);
+            this.Controls.Add(this.lblData);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -191,7 +263,9 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -211,6 +285,12 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblData;
+        private System.Windows.Forms.DataGridView dgvData;
+        private System.Windows.Forms.TextBox txtFileName;
+        private System.Windows.Forms.Button btnExplorar;
+        private System.Windows.Forms.ComboBox cmbHoja;
+        private System.Windows.Forms.Label lblHoja;
     }
 }
 
